@@ -48,5 +48,5 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
             if content == u'拾卡':
-                reply = u'请你这个叼毛输入拾卡的卡号'
-        return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
+                reply = u'请你这个叼毛按如下格式提交拾卡信息:s卡号\n如：s20481024'
+                return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
