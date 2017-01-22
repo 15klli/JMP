@@ -47,6 +47,19 @@ class WeixinInterface:
        # return self.render.reply_text(fromUser,toUser,int(time.time()),u"我是你大爷，"+content) # render方法是按 reply_text.xml 这个模板渲染，传入参数后就转换成微信要求的 XML 内容
         if msgType == 'text':
             content = xml.find("Content").text
+
             if content == u'拾卡':
-                reply = u'请你这个叼毛按如下格式提交拾卡信息:s卡号\n如：s20481024'
+                reply = u'请你这个叼毛按如下格式提交拾卡信息:\ns+卡号+(空格)+地点\n如：s20481024 你爹床上'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
+
+            if content.startswith('s'):
+                return self.render.reply_text(fromUser,toUser,int(time.time()),u'感谢叼毛的拾卡，我们已经第一时间通知施主了')
+
+            if content == u'不见卡了':
+                reply = u'你这个几把又不见卡了？\n马上输入:z+卡号\n如：z9527321'
+                return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
+
+            if content.startswith('z'):
+                return self.render.reply_text(fromUser,toUser,int(time.time()),u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了')
+
+
