@@ -49,7 +49,7 @@ class WeixinInterface:
             content = xml.find("Content").text
 
             if content == u'拾卡':
-                reply = u'请你这个叼毛按如下格式提交拾卡信息:\ns+卡号+(空格)+地点\n如：s20481024 你爹床上'
+                reply = u'请你这个叼毛按如下格式提交拾卡信息:\ns+卡号+(空格)+当前所在地\n如：s20481024 你爹床上'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
             if content.startswith('s'):
