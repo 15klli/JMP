@@ -15,7 +15,7 @@ import os
 import sae
 import web
 
-from weixinInterface import weixinInterface # 导入 WeixinInterface 这个类
+from weixinInterface import weixinInterface #导入 WeixinInterface 这个类
 
 urls = (
 '/weixin','WeixinInterface'
