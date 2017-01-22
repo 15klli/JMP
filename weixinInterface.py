@@ -9,10 +9,10 @@ from lxml import etree
 
 class WeixinInterface:
 
-    def __init__(self): # “初始化”部分还没看文档，不清楚细节
+    def __init__(self): 
         self.app_root = os.path.dirname(__file__)
-        self.templates_root = os.path.join(self.app_root, 'templates')
-        self.render = web.template.render(self.templates_root)
+        self.templates_root = os.path.join(self.app_root, 'templates') # templates 路径——字符串
+        self.render = web.template.render(self.templates_root) # 传入template 路径，渲染（即使用模板）
 
     def GET(self):
         # 获取输入参数
@@ -44,4 +44,9 @@ class WeixinInterface:
         msgType=xml.find("MsgType").text
         fromUser=xml.find("FromUserName").text
         toUser=xml.find("ToUserName").text
-        return self.render.reply_text(fromUser,toUser,int(time.time()),u"我是你大爷，"+content)
+       # return self.render.reply_text(fromUser,toUser,int(time.time()),u"我是你大爷，"+content) # render方法是按 reply_text.xml 这个模板渲染，传入参数后就转换成微信要求的 XML 内容
+        if msgType == 'text':
+            content = xml.find("Content").text
+            if content == u'拾卡':
+                reply = u'请你这个叼毛输入拾卡的卡号'
+        return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
