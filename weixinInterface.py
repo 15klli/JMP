@@ -5,9 +5,7 @@ import lxml
 import time
 import os
 import urllib2,json
-import pylibmc as memcache # 以使用 Memcached 功能
 from lxml import etree
-
 
 class WeixinInterface:
 
@@ -39,17 +37,13 @@ class WeixinInterface:
         if hashcode == signature:
             return echostr
 
-    def POST(self):
-        # 接收用户的post，并解析提取
+    def POST(self):        
         str_xml = web.data() # 获得post来的数据
         xml = etree.fromstring(str_xml) # 进行XML解析
-        content = xml.find("Content").text # 获得用户所输入的内容
-        msgType = xml.find("MsgType").text
-        fromUser = xml.find("FromUserName").text
-        toUser = xml.find("ToUserName").text
-
-        mc = pylibmc.Client() #初始化一个memcache实例用来保存用户的操作
-
+        content=xml.find("Content").text # 获得用户所输入的内容
+        msgType=xml.find("MsgType").text
+        fromUser=xml.find("FromUserName").text
+        toUser=xml.find("ToUserName").text
        # return self.render.reply_text(fromUser,toUser,int(time.time()),u"我是你大爷，"+content) # render方法是按 reply_text.xml 这个模板渲染，传入参数后就转换成微信要求的 XML 内容
         if msgType == 'text':
             content = xml.find("Content").text
@@ -67,54 +61,5 @@ class WeixinInterface:
 
             if content.startswith('z'):
                 return self.render.reply_text(fromUser,toUser,int(time.time()),u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了')
-
-            # 处理注册
-
-            if content == u'注册':
-                mc.set(fromUser+'_register','cardnum') # 注册入口
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易')
-
-            if content.lower() == 'bye':
-                mc.delete(fromUser+'_register')
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'你大力挣脱了小鞭，交易结束')
-            
-            mc_register = mc.get(fromUser+'_register') # 读取 memcached 中的缓存数据
-
-            ## 处理学号
-            if mc_register == 'cardnum':
-                if content.startswith('20') and ( len(content) == 10):
-                    add_cardnum()
-                    mc.set(fromUser+'_register','mail') 
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）')
-                else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
-
-            ## 处理邮箱
-            if mc_register == 'mailnum':
-                if content.find('@') > 0: # todo：要用正则式解析
-                    add_phonenum()
-                    mc.set(fromUser+'_register','phonenum') 
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的邮箱号！下面来输手机号，不想给就发”bye“')
-                else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
-
-            ## 处理手机号
-            if mc_register == 'phonenum':
-                if content.startswith('1') and (len(content) == 11): # todo：要用正则式解析
-                    add_phonenum()
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的手机号！输入”bye“结束注册')
-                else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
-
-
-    def add_cardnum():
-        pass
-
-    def add_phonenum():
-        pass
-
-    def add_mail():
-        pass
-
 
 
