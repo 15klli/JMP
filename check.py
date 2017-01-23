@@ -7,3 +7,6 @@ def is_mail(content):
 
 def is_phonenum(content):
     return content.startswith('1') and (len(content) == 11)  # todo：要用正则式解析
+
+def is_location(content):
+    return True

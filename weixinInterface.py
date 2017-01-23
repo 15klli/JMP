@@ -94,7 +94,7 @@ class WeixinInterface:
             # 注册邮箱
             if mc_register == 'mail':
                 if check.is_mail(content):
-                    # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
+                    add_phonenum(content) # 加入数据库
                     mc.set(fromUser + '_register', 'phonenum')
                     reply = u'已记录你的邮箱！下面来输手机号，不想给就发”bye“'
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
@@ -104,7 +104,7 @@ class WeixinInterface:
             # 注册手机号
             if mc_register == 'phonenum':
                 if check.is_phonenum(content):
-                    # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
+                    add_phonenum(content) # 加入数据库
                     mc.delete(fromUser + '_register')
                     reply = u'已记录你的手机号！注册完成'
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
@@ -122,10 +122,20 @@ class WeixinInterface:
             if mc_foundcard == 'foundcard_num':
                 if check.is_rollnum(content):
                     add_foundcard_num(content)
+                    mc.set(fromUser + '_foundcard', 'foundcard_location')
+                    reply = u'已记录该学号！请告诉我，你将卡放到哪里了？是不是在你下面'
+                    return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
+                else:
+                    return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
+
+            if mc_foundcard == 'foundcard_location':
+                if check.is_location(content):
+                    add_foundcard_location(content)
                     reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
                 else:
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
+
 
 def add_rollnum(rollnum):
     pass
@@ -137,6 +147,9 @@ def add_mail(mail):
     pass
 
 def add_foundcard_num(num):
+    pass
+
+def add_foundcard_location(content):
     pass
 
     def register(self, fromUser, toUser, content, reply):
