@@ -124,6 +124,8 @@ class WeixinInterface:
                     add_foundcard_num(content)
                     reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
+                else:
+                    return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
 
 def add_rollnum(rollnum):
     pass
