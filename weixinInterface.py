@@ -6,6 +6,7 @@ import time
 import os
 import urllib2,json
 from lxml import etree
+import pylibmc # 以使用 Memcached 功能
 
 class WeixinInterface:
 
@@ -44,7 +45,12 @@ class WeixinInterface:
         msgType=xml.find("MsgType").text
         fromUser=xml.find("FromUserName").text
         toUser=xml.find("ToUserName").text
+
+        mc = pylibmc.Client() #初始化一个memcache实例用来保存用户的操作
+
        # return self.render.reply_text(fromUser,toUser,int(time.time()),u"我是你大爷，"+content) # render方法是按 reply_text.xml 这个模板渲染，传入参数后就转换成微信要求的 XML 内容
+        
+
         if msgType == 'text':
             content = xml.find("Content").text
 
@@ -61,5 +67,16 @@ class WeixinInterface:
 
             if content.startswith('z'):
                 return self.render.reply_text(fromUser,toUser,int(time.time()),u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了')
+
+
+            # 处理注册
+
+            if content == u'注册':
+                mc.set(fromUser+'_register','cardnum') # 注册入口
+                return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易')
+
+
+
+
 
 
