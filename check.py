@@ -23,4 +23,4 @@ def get_teststr():
 	return 'test_success'
 
 def is_rollnum(num):
-	return True
+	return (num.startswith('20')) and (len(num)==20)
