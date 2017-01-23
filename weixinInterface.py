@@ -57,7 +57,7 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
 
-            control.register(self,fromUser,toUser,content,reinput_warning)
+            return control.register(self,fromUser,toUser,content,reinput_warning)
 
             if content.startswith('s'):
                 reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
