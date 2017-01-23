@@ -40,6 +40,8 @@ class WeixinInterface:
             return echostr
 
     def POST(self):
+        input_again_warn = u'叼毛，你手残输错啦，再来一次吧'
+
         # 接收用户的post，并解析提取
         str_xml = web.data() # 获得post来的数据
         xml = etree.fromstring(str_xml) # 进行XML解析
@@ -54,29 +56,30 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
 
-            if content == u'拾卡':
-                reply = u'请你这个叼毛按如下格式提交拾卡信息:\ns+卡号+(空格)+当前所在地\n如：s20481024 你爹床上'
-                return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
-
             if content.startswith('s'):
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'感谢叼毛的拾卡，我们已经第一时间通知施主了')
+                reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
+                return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
 
             if content == u'不见卡了':
                 reply = u'你这个几把又不见卡了？\n马上输入:z+卡号\n如：z9527321'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
             if content.startswith('z'):
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了')
+                reply = u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了'
+                return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
+
+
 
             # 处理注册
-
             if content == u'注册':
-                mc.set(fromUser+'_register','cardnum') # 注册入口
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易')
+                mc.set(fromUser+'_register','cardnum') # 注册入口，下同
+                reply = u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易'
+                return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
 
             if content.lower() == 'bye':
                 mc.delete(fromUser+'_register')
-                return self.render.reply_text(fromUser,toUser,int(time.time()),u'你大力挣脱了小鞭，交易结束')
+                reply = u'你大力挣脱了小鞭，交易结束'
+                return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
             
             mc_register = mc.get(fromUser+'_register') # 读取 memcached 中的缓存数据
 
@@ -85,27 +88,31 @@ class WeixinInterface:
                 if content.startswith('20') and ( len(content) == 10):
                     # add_cardnum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.set(fromUser+'_register','mail') 
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）')
+                    reply = u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）'
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
 
             ## 处理邮箱
             if mc_register == 'mail':
                 if content.find('@') > 0: # todo：要用正则式解析
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.set(fromUser+'_register','phonenum') 
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的邮箱！下面来输手机号，不想给就发”bye“')
+                    reply = u'已记录你的邮箱！下面来输手机号，不想给就发”bye“'
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
 
             ## 处理手机号
             if mc_register == 'phonenum':
                 if content.startswith('1') and (len(content) == 11): # todo：要用正则式解析
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.delete(fromUser+'_register')
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的手机号！注册完成')
+                    reply = u'已记录你的手机号！注册完成'
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
+
 
     def add_cardnum(cardnum):
         pass
