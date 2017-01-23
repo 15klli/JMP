@@ -57,7 +57,8 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
 
-            return control.register(self,fromUser,toUser,content,reinput_warning)
+            reply = 'tttess'
+            return self.register(fromUser,toUser,content,reply)
 
             if content.startswith('s'):
                 reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
@@ -122,3 +123,7 @@ class WeixinInterface:
 
     def add_mail(mail):
         pass
+
+    def register(self,fromUser,toUser,content,reply):
+        if content == 'test':
+            return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
