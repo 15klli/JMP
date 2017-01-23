@@ -85,8 +85,7 @@ class WeixinInterface:
 
             # 处理学号
             if mc_register == 'rollnum':
-                isrollnum = is_rollnum(content)
-                if isrollnum:
+                if is_rollnum(content):
                     # add_cardnum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.set(fromUser+'_register','mail') 
                     reply = u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）'
@@ -115,18 +114,17 @@ class WeixinInterface:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
 
 
-    def add_rollnum(rollnum):
-        pass
+def add_rollnum(rollnum):
+    pass
 
-    def add_phonenum(phonenum):
-        pass
+def add_phonenum(phonenum):
+    pass
 
-    def add_mail(mail):
-        pass
+def add_mail(mail):
+    pass
 
-    def is_rollnum(num):
-        return True
-        # return (num.startswith('20') and (len(num) == 10)
+def is_rollnum(num):
+    return (num.startswith('20') and (len(num) == 10)
 
 
 
