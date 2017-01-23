@@ -68,7 +68,7 @@ class WeixinInterface:
                 reply = u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
-                # 处理注册
+            # 处理注册
             if content == u'注册':
                 mc.set(fromUser + '_register', 'rollnum')  # 注册入口，下同
                 reply = u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易'
@@ -81,7 +81,7 @@ class WeixinInterface:
 
             mc_register = mc.get(fromUser + '_register')  # 读取 memcached 中的缓存数据
 
-            # 处理学号
+            # 注册学号
             if mc_register == 'rollnum':
                 if check.is_rollnum(content):
                     # add_cardnum(content) # 加入数据库，这里加注释是避免未完成而产生bug
@@ -91,7 +91,7 @@ class WeixinInterface:
                 else:
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
 
-            # 处理邮箱
+            # 注册邮箱
             if mc_register == 'mail':
                 if check.is_mail(content):
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
@@ -101,7 +101,7 @@ class WeixinInterface:
                 else:
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
 
-            # 处理手机号
+            # 注册手机号
             if mc_register == 'phonenum':
                 if content.startswith('1') and (len(content) == 11):  # todo：要用正则式解析
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
@@ -110,6 +110,12 @@ class WeixinInterface:
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
                 else:
                     return self.render.reply_text(fromUser, toUser, int(time.time()), reinput_warning)
+
+            # 处理拾卡
+            if content == u'捡到卡了':
+                mc.set(fromUser + '_foundcard', 'foundcard_num')  # 注册入口，下同
+                reply = u'请输入卡上的学号！'
+                return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
     def add_rollnum(rollnum):
         pass
