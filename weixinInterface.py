@@ -73,6 +73,7 @@ class WeixinInterface:
             if content == u'注册':
                 mc.set(fromUser+'_register','rollnum') # 注册入口，下同
                 reply = u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易'
+                reply =check.get_teststr() # 测试封装
                 return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
 
             if content.lower() == 'bye':
