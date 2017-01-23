@@ -84,9 +84,9 @@ class WeixinInterface:
             ## 处理学号
             if mc_register == 'cardnum':
                 if content.startswith('20') and ( len(content) == 10):
-                    cardnum = add_cardnum(content)
+                    #cardnum = add_cardnum(content)
                     mc.set(fromUser+'_register','mail') 
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的学号'+cardnum+'！下面来输邮箱，不给就通知不了你啦（祝你丢卡）')
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）')
                 else:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
 
