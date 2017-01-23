@@ -125,7 +125,8 @@ class WeixinInterface:
         pass
 
     def is_rollnum(num):
-        return (num.startswith('20') and (len(num) == 10)
+        return True
+        # return (num.startswith('20') and (len(num) == 10)
 
 
 
