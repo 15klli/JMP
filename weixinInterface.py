@@ -8,6 +8,7 @@ import urllib2, json
 import pylibmc  # 以使用 Memcached 功能
 from lxml import etree
 import check
+import control
 
 
 class WeixinInterface:
@@ -56,6 +57,8 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
 
+            control.register(self,fromUser,toUser,content,reinput_warning)
+
             if content.startswith('s'):
                 reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
@@ -68,7 +71,7 @@ class WeixinInterface:
                 reply = u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
-                # 处理注册
+            # 处理注册
             if content == u'注册':
                 mc.set(fromUser + '_register', 'rollnum')  # 注册入口，下同
                 reply = u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易'
