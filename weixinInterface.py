@@ -79,6 +79,17 @@ class WeixinInterface:
                 mc.delete(fromUser+'_register')
                 return self.render.reply_text(fromUser,toUser,int(time.time()),u'你大力挣脱了小鞭，交易结束')
 
+            mc_register = mc.get(fromUser+'_register') # 读取 memcached 中的缓存数据
 
-
+            ## 处理学号
+            if mc_register == 'cardnum':
+                if content.startswith('20') and ( len(content) == 10):
+                    add_cardnum()
+                    mc.set(fromUser+'_register','mail') 
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）')
+                else:
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
+                    
+    def add_cardnum():
+        pass
 
