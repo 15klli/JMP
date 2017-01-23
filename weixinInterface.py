@@ -69,8 +69,6 @@ class WeixinInterface:
                 reply = u'如果有人这么倒霉，捡到叼毛的卡，我们也不得不第一时间通知你了'
                 return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
 
-
-
         # 处理注册
             if content == u'注册':
                 mc.set(fromUser+'_register','rollnum') # 注册入口，下同
