@@ -18,3 +18,6 @@ def addfk(username, fktime, fkcontent):
  
 def get_fkcontent():
     return db.select('fk', order='id')
+
+def get_teststr():
+	return 'test_success'
