@@ -54,7 +54,7 @@ class WeixinInterface:
         if msgType == 'text':
             content = xml.find("Content").text
 
-            handle_register(content)
+            handle_register()
 
             if content == u'拾卡':
                 reply = u'请你这个叼毛按如下格式提交拾卡信息:\ns+卡号+(空格)+当前所在地\n如：s20481024 你爹床上'
@@ -110,7 +110,7 @@ class WeixinInterface:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
 
 
-    def handle_register(self,content):
+    def handle_register(self):
         if content == u'测试封装':
             # mc.set(fromUser+'_test','start_test') # 注册入口
             return self.render.reply_text(fromUser,toUser,int(time.time()),u'测试封装')
