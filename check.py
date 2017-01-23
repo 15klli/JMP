@@ -3,7 +3,6 @@ import web
 import web.db
 import sae.const
 
-
 db = web.database(
     dbn='mysql',
     host=sae.const.MYSQL_HOST,
@@ -12,15 +11,22 @@ db = web.database(
     passwd=sae.const.MYSQL_PASS,
     db=sae.const.MYSQL_DB
 )
- 
+
+
 def addfk(username, fktime, fkcontent):
     return db.insert('fk', user=username, time=fktime, fk_content=fkcontent)
- 
+
+
 def get_fkcontent():
     return db.select('fk', order='id')
 
+
 def get_teststr():
-	return 'test_success'
+    return 'test_success'
+
 
 def is_rollnum(num):
-	return (num.startswith('20')) and (len(num)==20)
+    if (num.startswith('20')) and (len(num) == 10):
+        return True
+    else:
+        return False
