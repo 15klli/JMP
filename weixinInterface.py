@@ -75,7 +75,9 @@ class WeixinInterface:
                 mc.set(fromUser+'_register','cardnum') # 注册入口
                 return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易')
 
-
+            if content.lower() == 'bye':
+                mc.delete(fromUser+'_register')
+                return self.render.reply_text(fromUser,toUser,int(time.time()),u'你大力挣脱了小鞭，交易结束')
 
 
 
