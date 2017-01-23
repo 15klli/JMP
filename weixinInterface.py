@@ -93,7 +93,7 @@ class WeixinInterface:
 
             # 处理邮箱
             if mc_register == 'mail':
-                if content.find('@') > 0:  # todo：要用正则式解析
+                if check.is_mail(content):
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.set(fromUser + '_register', 'phonenum')
                     reply = u'已记录你的邮箱！下面来输手机号，不想给就发”bye“'
