@@ -40,7 +40,7 @@ class WeixinInterface:
             return echostr
 
     def POST(self):
-        reinput_warning = u'叼毛，你手残输错啦，再来一次吧'
+        input_again_warn = u'叼毛，你手残输错啦，再来一次吧'
 
         # 接收用户的post，并解析提取
         str_xml = web.data() # 获得post来的数据
@@ -91,7 +91,7 @@ class WeixinInterface:
                     reply = u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）'
                     return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
 
             # 处理邮箱
             if mc_register == 'mail':
@@ -101,7 +101,7 @@ class WeixinInterface:
                     reply = u'已记录你的邮箱！下面来输手机号，不想给就发”bye“'
                     return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
 
             # 处理手机号
             if mc_register == 'phonenum':
@@ -111,8 +111,12 @@ class WeixinInterface:
                     reply = u'已记录你的手机号！注册完成'
                     return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
                 else:
+<<<<<<< HEAD
                     return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
 
+=======
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),input_again_warn)
+>>>>>>> parent of b525eaf... 修改变量名为 reinput_warning
 
 
     def add_rollnum(rollnum):
