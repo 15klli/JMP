@@ -7,7 +7,7 @@ import os
 import urllib2,json
 import pylibmc # 以使用 Memcached 功能
 from lxml import etree
-import check
+#import check
 
 
 class WeixinInterface:
