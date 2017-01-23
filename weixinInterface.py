@@ -111,7 +111,7 @@ class WeixinInterface:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
 
 
-    def handle_register(fromUser,toUser):
+    def handle_register(self,fromUser,toUser):
         return self.render.reply_text(fromUser,toUser,int(time.time()),u'封装测试')
 
 
