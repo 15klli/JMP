@@ -103,7 +103,7 @@ class WeixinInterface:
 
             # 处理手机号
             if mc_register == 'phonenum':
-                if content.startswith('1') and (len(content) == 11):  # todo：要用正则式解析
+                if check.is_phonenum(content):
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.delete(fromUser + '_register')
                     reply = u'已记录你的手机号！注册完成'
