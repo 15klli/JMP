@@ -7,7 +7,7 @@ from weixinInterface import WeixinInterface #导入 WeixinInterface 这个类
 
 urls = (
 '/weixin','WeixinInterface'
-'/', 'Test',
+'/test', 'Test',
 )
 
 app_root = os.path.dirname(__file__)
