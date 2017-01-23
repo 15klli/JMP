@@ -3,7 +3,6 @@ import os
 
 import sae
 import web
-
 from weixinInterface import WeixinInterface #导入 WeixinInterface 这个类
 
 urls = (
