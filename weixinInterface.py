@@ -83,15 +83,15 @@ class WeixinInterface:
             
             mc_register = mc.get(fromUser+'_register') # 读取 memcached 中的缓存数据
 
-            # 处理学号
-            if mc_register == 'rollnum':
-                if is_rollnum(content):
-                    # add_cardnum(content) # 加入数据库，这里加注释是避免未完成而产生bug
-                    mc.set(fromUser+'_register','mail') 
-                    reply = u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）'
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
-                else:
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
+            # # 处理学号
+            # if mc_register == 'rollnum':
+            #     if is_rollnum(content):
+            #         # add_cardnum(content) # 加入数据库，这里加注释是避免未完成而产生bug
+            #         mc.set(fromUser+'_register','mail') 
+            #         reply = u'已记录你的学号！下面来输邮箱，不给就通知不了你啦（祝你丢卡）'
+            #         return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
+            #     else:
+            #         return self.render.reply_text(fromUser,toUser,int(time.time()),reinput_warning)
 
             # 处理邮箱
             if mc_register == 'mail':
@@ -123,8 +123,8 @@ class WeixinInterface:
     def add_mail(mail):
         pass
 
-    def is_rollnum(num):
-        return (num.startswith('20') and (len(num) == 10)
+    # def is_rollnum(num):
+    #     return (num.startswith('20') and (len(num) == 10)
 
 
 
