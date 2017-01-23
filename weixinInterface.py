@@ -90,7 +90,7 @@ class WeixinInterface:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
 
             ## 处理邮箱
-            if mc_register == 'mailnum':
+            if mc_register == 'mail':
                 if content.find('@') > 0: # todo：要用正则式解析
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
                     mc.set(fromUser+'_register','phonenum') 
