@@ -21,3 +21,6 @@ def get_fkcontent():
 
 def get_teststr():
 	return 'test_success'
+
+def is_rollnum(num):
+	return True
