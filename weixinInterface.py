@@ -102,7 +102,8 @@ class WeixinInterface:
             if mc_register == 'phonenum':
                 if content.startswith('1') and (len(content) == 11): # todo：要用正则式解析
                     # add_phonenum(content) # 加入数据库，这里加注释是避免未完成而产生bug
-                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的手机号！输入”bye“结束注册')
+                    mc.delete(fromUser+'_register')
+                    return self.render.reply_text(fromUser,toUser,int(time.time()),u'已记录你的手机号！注册完成')
                 else:
                     return self.render.reply_text(fromUser,toUser,int(time.time()),u'叼毛，你手残输错啦，再来一次吧')
 
