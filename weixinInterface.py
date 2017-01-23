@@ -60,10 +60,6 @@ class WeixinInterface:
             # reply = 'tttess'
             # return self.register(fromUser, toUser, content, reply)
 
-            if content.startswith('s'):
-                reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
-                return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
-
             if content == u'不见卡了':
                 reply = u'你这个几把又不见卡了？\n马上输入:z+卡号\n如：z9527321'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
@@ -121,14 +117,25 @@ class WeixinInterface:
                 reply = u'请输入卡上的学号！'
                 return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
-    def add_rollnum(rollnum):
-        pass
+            mc_foundcard = mc.get(fromUser + '_foundcard')
 
-    def add_phonenum(phonenum):
-        pass
+            if mc_foundcard == 'foundcard_num':
+                if check.is_rollnum(content):
+                    add_foundcard_num(content)
+                    reply = u'感谢叼毛的拾卡，我们已经第一时间通知施主了'
+                    return self.render.reply_text(fromUser, toUser, int(time.time()), reply)
 
-    def add_mail(mail):
-        pass
+def add_rollnum(rollnum):
+    pass
+
+def add_phonenum(phonenum):
+    pass
+
+def add_mail(mail):
+    pass
+
+def add_foundcard_num(num):
+    pass
 
     def register(self, fromUser, toUser, content, reply):
         if content == 'test':
