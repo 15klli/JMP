@@ -72,7 +72,7 @@ class WeixinInterface:
 
         # 处理注册
             if content == u'注册':
-                mc.set(fromUser+'_register','cardnum') # 注册入口，下同
+                mc.set(fromUser+'_register','rollnum') # 注册入口，下同
                 reply = u'叼毛，我们来注(p)册(y)了，请输入你的学号！\n输入 bye 结束交易'
                 return self.render.reply_text(fromUser,toUser,int(time.time()),reply)
 
@@ -124,7 +124,7 @@ class WeixinInterface:
     def add_mail(mail):
         pass
 
-    def  is_rollnum(num):
+    def is_rollnum(num):
         return (num.startswith('20') and (len(num) == 10)
 
 
